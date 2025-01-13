@@ -1,21 +1,21 @@
-package main
+package interpreter
 
 import (
 	"slices"
 )
 
-type TokenType int
+type TokenType string
 
 const (
-	PlusToken TokenType = iota + 1
-	MinusToken
-	AsteriskToken
-	SlashToken
-	IntegerToken
-	LeftParenthesisToken
-	RightParenthesisToken
-	EOFToken
-	IllegalToken
+	PlusToken             TokenType = "PlusToken"
+	MinusToken            TokenType = "MinusToken"
+	AsteriskToken         TokenType = "AsteriskToken"
+	SlashToken            TokenType = "SlashToken"
+	IntegerToken          TokenType = "IntegerToken"
+	LeftParenthesisToken  TokenType = "LeftParenthesisToken"
+	RightParenthesisToken TokenType = "RightParenthesisToken"
+	EOFToken              TokenType = "EOFToken"
+	IllegalToken          TokenType = "IllegalToken"
 )
 
 type Token struct {

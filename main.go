@@ -1,7 +1,11 @@
 package main
 
-import "fmt"
+import (
+	"os"
+
+	"github.com/DeluxeOwl/pratt/interpreter"
+)
 
 func main() {
-	fmt.Println("A simple pratt parser in Go")
+	interpreter.StartRepl(os.Stdin, os.Stdout)
 }

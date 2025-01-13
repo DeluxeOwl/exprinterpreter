@@ -78,7 +78,6 @@ func (p *Parser) ParseProgram() *Program {
 func (p *Parser) parseExpression(priority Priority) Expression {
 	prefixParser, hasPrefixParser := p.prefixExprFns[p.currToken.Type]
 	if !hasPrefixParser {
-		// panic("todo: no prefix parser")
 		return nil
 	}
 
@@ -132,7 +131,6 @@ func (p *Parser) parseIntegerExpression() Expression {
 	value, err := strconv.ParseInt(p.currToken.Value, 0, 64)
 	if err != nil {
 		// todo
-		// panic("couldnt parse" + p.currToken.Value + "as an integer")
 		return nil
 	}
 	expression.Value = value

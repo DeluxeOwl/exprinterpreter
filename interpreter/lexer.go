@@ -59,7 +59,7 @@ func (l *Lexer) NextToken() Token {
 		token = Token{Type: RightParenthesisToken, Value: ")"}
 	default:
 		if l.isDigit(l.currChar) {
-			token = Token{Type: IntegerToken, Value: string(l.currChar)}
+			token = Token{Type: IntegerToken, Value: l.readNumber()}
 		} else {
 			token = Token{Type: IllegalToken, Value: string(l.currChar)}
 		}
@@ -87,4 +87,12 @@ func (l *Lexer) skipWhitespace() {
 
 func (l *Lexer) isDigit(ch byte) bool {
 	return '0' <= ch && ch <= '9'
+}
+
+func (l *Lexer) readNumber() string {
+	pos := l.currCharPos
+	for l.isDigit(l.currChar) {
+		l.nextChar()
+	}
+	return string(l.sourceCode[pos:l.currCharPos])
 }

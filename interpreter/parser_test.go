@@ -2,7 +2,7 @@ package interpreter
 
 import "testing"
 
-func TestParserConstructor(t *testing.T) {
+func TestParserInitializesTokens(t *testing.T) {
 	l := NewLexer("1 + 2")
 	p := NewParser(l)
 

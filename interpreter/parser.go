@@ -45,6 +45,7 @@ func NewParser(lexer *Lexer) *Parser {
 		infixExprFns:  map[TokenType]infixExprParser{},
 	}
 
+	p.registerPrefixParser(LeftParenthesisToken, p.parseGroupedExpression)
 	p.registerPrefixParser(IntegerToken, p.parseIntegerExpression)
 	p.registerPrefixParser(MinusToken, p.parseUnaryExpression)
 
@@ -138,6 +139,18 @@ func (p *Parser) parseIntegerExpression() Expression {
 	return expression
 }
 
+func (p *Parser) parseGroupedExpression() Expression {
+	p.advanceToken()
+
+	exp := p.parseExpression(PriorityZero)
+
+	if !p.expectNextTokenToBe(RightParenthesisToken) {
+		return nil
+	}
+
+	return exp
+}
+
 func (p *Parser) registerPrefixParser(tokenType TokenType, fn prefixExprParser) {
 	p.prefixExprFns[tokenType] = fn
 }
@@ -167,4 +180,14 @@ func (p *Parser) advanceToken() {
 
 func (p *Parser) currTokenIs(tokenType TokenType) bool {
 	return p.currToken.Type == tokenType
+}
+func (p *Parser) nextTokenIs(tokenType TokenType) bool {
+	return p.nextToken.Type == tokenType
+}
+func (p *Parser) expectNextTokenToBe(tokenType TokenType) bool {
+	if p.nextTokenIs(tokenType) {
+		p.advanceToken()
+		return true
+	}
+	return false
 }

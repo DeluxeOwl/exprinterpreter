@@ -60,6 +60,7 @@ func (l *Lexer) NextToken() Token {
 	default:
 		if l.isDigit(l.currChar) {
 			token = Token{Type: IntegerToken, Value: l.readNumber()}
+			return token
 		} else {
 			token = Token{Type: IllegalToken, Value: string(l.currChar)}
 		}

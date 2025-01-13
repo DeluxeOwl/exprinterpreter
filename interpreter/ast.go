@@ -20,13 +20,13 @@ func (p *Program) String() string {
 	return out.String()
 }
 
-type PrefixExpression struct {
+type UnaryExpression struct {
 	Token    Token
 	Operator string
 	Right    Expression
 }
 
-func (pe *PrefixExpression) String() string {
+func (pe *UnaryExpression) String() string {
 	var out bytes.Buffer
 
 	out.WriteString("(")

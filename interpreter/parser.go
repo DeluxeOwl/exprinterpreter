@@ -46,7 +46,7 @@ func NewParser(lexer *Lexer) *Parser {
 	}
 
 	p.registerPrefixParser(IntegerToken, p.parseIntegerExpression)
-	p.registerPrefixParser(MinusToken, p.parsePrefixOperatorExpression)
+	p.registerPrefixParser(MinusToken, p.parseUnaryExpression)
 
 	infixTokens := []TokenType{PlusToken, MinusToken, SlashToken, AsteriskToken}
 	for _, infixTokenType := range infixTokens {
@@ -96,8 +96,8 @@ func (p *Parser) parseExpression(priority Priority) Expression {
 	return leftExpression
 }
 
-func (p *Parser) parsePrefixOperatorExpression() Expression {
-	expression := &PrefixExpression{
+func (p *Parser) parseUnaryExpression() Expression {
+	expression := &UnaryExpression{
 		Token:    p.currToken,
 		Operator: p.currToken.Value,
 	}

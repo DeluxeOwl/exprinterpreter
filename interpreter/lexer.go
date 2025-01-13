@@ -38,23 +38,7 @@ func NewLexer(sourceCode string) *Lexer {
 	return l
 }
 
-func (l *Lexer) nextChar() {
-	if l.nextCharPos >= len(l.sourceCode) {
-		l.currChar = 0
-	} else {
-		l.currChar = l.sourceCode[l.nextCharPos]
-	}
-	l.currCharPos = l.nextCharPos
-	l.nextCharPos++
-}
-
-func (l *Lexer) skipWhitespace() {
-	for slices.Contains([]byte{' ', '\t', '\n', '\r'}, l.currChar) {
-		l.nextChar()
-	}
-}
-
-func (l *Lexer) nextToken() Token {
+func (l *Lexer) NextToken() Token {
 	l.skipWhitespace()
 
 	var token Token
@@ -85,14 +69,22 @@ func (l *Lexer) nextToken() Token {
 	return token
 }
 
-func (l *Lexer) isDigit(ch byte) bool {
-	return '0' <= ch && ch <= '9'
+func (l *Lexer) nextChar() {
+	if l.nextCharPos >= len(l.sourceCode) {
+		l.currChar = 0
+	} else {
+		l.currChar = l.sourceCode[l.nextCharPos]
+	}
+	l.currCharPos = l.nextCharPos
+	l.nextCharPos++
 }
 
-func (l *Lexer) Lex() []Token {
-	tokens := []Token{}
-	for tok := l.nextToken(); tok.Type != EOFToken; tok = l.nextToken() {
-		tokens = append(tokens, tok)
+func (l *Lexer) skipWhitespace() {
+	for slices.Contains([]byte{' ', '\t', '\n', '\r'}, l.currChar) {
+		l.nextChar()
 	}
-	return tokens
+}
+
+func (l *Lexer) isDigit(ch byte) bool {
+	return '0' <= ch && ch <= '9'
 }

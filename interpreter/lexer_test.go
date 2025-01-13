@@ -31,7 +31,10 @@ func TestLexer(t *testing.T) {
 
 	for _, tt := range tests {
 		l := NewLexer(tt.source)
-		tokens := l.Lex()
+		tokens := []Token{}
+		for tok := l.NextToken(); tok.Type != EOFToken; tok = l.NextToken() {
+			tokens = append(tokens, tok)
+		}
 		if !reflect.DeepEqual(tokens, tt.want) {
 			t.Errorf("Lex(%q) = %v; want %v", tt.source, tokens, tt.want)
 		}

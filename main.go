@@ -3,7 +3,7 @@ package main
 import (
 	"os"
 
-	"github.com/DeluxeOwl/pratt/interpreter"
+	"github.com/DeluxeOwl/exprinterpreter/interpreter"
 )
 
 func main() {

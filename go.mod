@@ -1,3 +1,3 @@
-module github.com/DeluxeOwl/pratt
+module github.com/DeluxeOwl/exprinterpreter
 
 go 1.23.4

@@ -83,14 +83,14 @@ func (p *Parser) parseExpression(priority Priority) Expression {
 
 	leftExpression := prefixParser()
 
-	for priority < p.nextTokenPriority() {
-		nextInfixParser, hasNextInfixParser := p.infixExprFns[p.nextToken.Type]
+	for p.nextTokenPriority() > priority {
+		infixParser, hasNextInfixParser := p.infixExprFns[p.nextToken.Type]
 		if !hasNextInfixParser {
 			return leftExpression
 		}
 		p.advanceToken()
 
-		leftExpression = nextInfixParser(leftExpression)
+		leftExpression = infixParser(leftExpression)
 	}
 
 	return leftExpression
